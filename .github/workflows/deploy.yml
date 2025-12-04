@@ -2,7 +2,7 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [ "main", "dev", "infra/seperation" ] # 테스트용 infra/seperation 브랜치 추가
+    branches: [ "main" ] # 테스트용 infra/seperation 브랜치 추가
   workflow_dispatch: # GitHub UI에서 수동 실행 가능
 
 permissions:
