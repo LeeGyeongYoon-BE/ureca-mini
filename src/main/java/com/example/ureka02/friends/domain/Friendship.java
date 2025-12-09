@@ -13,16 +13,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class FriendShip {
+public class Friendship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private User sender;
 
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "receiver_id", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private User receiver;
 

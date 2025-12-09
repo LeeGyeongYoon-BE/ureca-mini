@@ -1,34 +1,38 @@
 package com.example.ureka02.friends.repository;
 
-import com.example.ureka02.friends.domain.FriendShip;
-import com.example.ureka02.friends.domain.FriendStatus;
+import com.example.ureka02.friends.domain.Friendship;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface FriendRepository extends JpaRepository<FriendShip, Long> {
-    Optional<FriendShip> findBySenderId(Long senderId);
-    Optional<FriendShip> findByReceiverId(Long receiverId);
-    Optional<FriendShip> findBySenderIdAndReceiverId(Long senderId, Long receiverId);
+@Repository
+public interface FriendRepository extends JpaRepository<Friendship, Long> {
 
-    // 친구 요청 조회용
+    Optional<Friendship> findBySender_Id(Long senderId);
+
+    Optional<Friendship> findByReceiver_Id(Long receiverId);
+
+    Optional<Friendship> findBySender_IdAndReceiver_Id(Long senderId, Long receiverId);
+
+
+    // 친구 요청 조회
     @Query("""
-        SELECT f FROM friendship f
+        SELECT f FROM Friendship f
         WHERE (f.sender.id = :userId OR f.receiver.id = :userId)
-          AND f.status = 'PENDING'
+          AND f.status = com.example.ureka02.friends.domain.FriendStatus.PENDING
     """)
-    List<FriendShip> findPendingFriendships(Long userId);
+    List<Friendship> findPendingFriendships(Long userId);
 
 
-    // 친구 목록 조회용
+    // 친구 목록 조회
     @Query("""
-        SELECT f FROM friendship f
+        SELECT f FROM Friendship f
         WHERE (f.sender.id = :userId OR f.receiver.id = :userId)
-          AND f.status = 'ACCEPTED'
+          AND f.status = com.example.ureka02.friends.domain.FriendStatus.ACCEPTED
     """)
-    List<FriendShip> findAcceptedFriendships(Long userId);
-
-
+    List<Friendship> findAcceptedFriendships(Long userId);
 }
+

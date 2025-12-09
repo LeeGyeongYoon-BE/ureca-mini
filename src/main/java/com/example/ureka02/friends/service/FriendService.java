@@ -1,6 +1,6 @@
 package com.example.ureka02.friends.service;
 
-import com.example.ureka02.friends.domain.FriendShip;
+import com.example.ureka02.friends.domain.Friendship;
 import com.example.ureka02.friends.domain.FriendStatus;
 import com.example.ureka02.friends.dto.response.FriendResponse;
 import com.example.ureka02.friends.repository.FriendRepository;
@@ -28,16 +28,16 @@ public class FriendService {
         }
 
         // 기존 요청 존재 여부 확인
-        Optional<FriendShip> existing =
-                friendRepository.findBySenderIdAndReceiverId(senderId, receiverId);
+        Optional<Friendship> existing =
+                friendRepository.findBySender_IdAndReceiver_Id(senderId, receiverId);
 
         if (existing.isPresent()) {
             throw new IllegalStateException("이미 친구 요청이 존재합니다.");
         }
 
         // 반대 방향 요청 또는 친구 여부 확인
-        Optional<FriendShip> reverse =
-                friendRepository.findBySenderIdAndReceiverId(receiverId, senderId);
+        Optional<Friendship> reverse =
+                friendRepository.findBySender_IdAndReceiver_Id(receiverId, senderId);
 
         if (reverse.isPresent()) {
             throw new IllegalStateException("이미 친구 관계이거나 요청이 반대로 존재합니다.");
@@ -49,13 +49,13 @@ public class FriendService {
         User receiver = userRepository.findById(receiverId)
                 .orElseThrow(() -> new IllegalArgumentException("수신자 정보 없음"));
 
-        FriendShip friendship = FriendShip.builder()
+        Friendship friendship = Friendship.builder()
                 .sender(sender)
                 .receiver(receiver)
                 .status(FriendStatus.PENDING)
                 .build();
 
-        FriendShip saved = friendRepository.save(friendship);
+        Friendship saved = friendRepository.save(friendship);
         return new FriendResponse(saved);
     }
 
@@ -69,7 +69,7 @@ public class FriendService {
 
     // 3. 친구 요청 수락
     public boolean acceptFriendRequest(Long friendshipId, Long receiverId) {
-        FriendShip friendship = friendRepository.findById(friendshipId)
+        Friendship friendship = friendRepository.findById(friendshipId)
                 .orElseThrow(() -> new IllegalArgumentException("요청 정보 없음"));
 
         if (!friendship.getReceiver().getId().equals(receiverId)) {
@@ -83,7 +83,7 @@ public class FriendService {
     // 4. 친구 요청 거절 (삭제)
     public boolean rejectFriendRequest(Long friendshipId, Long receiverId) {
 
-        FriendShip friendship = friendRepository.findById(friendshipId)
+        Friendship friendship = friendRepository.findById(friendshipId)
                 .orElseThrow(() -> new IllegalArgumentException("요청 정보 없음"));
 
         if (!friendship.getReceiver().getId().equals(receiverId)) {
