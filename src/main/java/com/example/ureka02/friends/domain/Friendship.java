@@ -6,6 +6,13 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * 커뮤니티 친구관계 엔티티
+ *
+ * @author 김원기
+ * @since 2025-12-09(화)
+ */
+
 @Entity
 @Table(name = "friendship")
 @Getter

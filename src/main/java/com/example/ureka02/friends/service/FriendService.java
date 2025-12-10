@@ -102,7 +102,7 @@ public class FriendService {
                 .toList();
     }
 
-    // 6. 친구 삭제 (양방향 삭제)
+    // 6. 친구 삭제
     public boolean deleteFriend(Long reqId) {
         friendRepository.deleteById(reqId);
         return true;
