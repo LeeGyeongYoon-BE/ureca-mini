@@ -53,12 +53,15 @@ public class SecurityConfig {
                                                 .requestMatchers(
                                                                 "/v3/api-docs/**",
                                                                 "/swagger-ui/**",
+                                                                "/authSwagger/**",
                                                                 "/swagger-ui.html")
                                                 .permitAll()
 
                                                 // 토큰 없이 접근 허용할 URL들
                                                 .requestMatchers(
+                                                				"/home", "/",
                                                                 "/auth/login",
+                                                                "/auth/login/local",
                                                                 "/auth/signup",
                                                                 "/auth/kakao/**",
                                                                 "/oauth2/**",
