@@ -48,7 +48,8 @@ public enum ErrorCode {
 
     // recruitment
     RECRUITMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "R404001", "모집글이 존재하지 않습니다."),
-    RECRUITMENT_ACCESS_DENIED(HttpStatus.FORBIDDEN, "R403001", "모집글 수정 권한이 없습니다.");
+    RECRUITMENT_ACCESS_DENIED(HttpStatus.FORBIDDEN, "R403001", "모집글 수정 권한이 없습니다."),
+    RECRUITMENT_EXPIRED(HttpStatus.BAD_REQUEST, "R400001", "이미 마감된 모집글입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
