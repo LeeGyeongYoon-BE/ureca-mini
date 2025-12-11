@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: local
+  config:
+    import:
+      - optional:classpath:application-secret.yml
+      - optional:classpath:application-oauth-kakao.yml
 
   # JPA 공통 설정
   jpa:
